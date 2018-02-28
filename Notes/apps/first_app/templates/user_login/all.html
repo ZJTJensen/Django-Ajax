@@ -1,0 +1,29 @@
+{% for user in users %}
+    <h1>{{ user.name }}</h1>
+    <form action='{{ user.id }}' method='post' class='ajax_form_2'>
+            {% csrf_token %}
+          <textarea name="message" class = 'ajax_first_name' cols="30" rows="10">{{ user.message }}</textarea>
+    </form>
+    
+    <form action="{{ user.id }}" method='post' class='ajax_form_2'>
+        {% csrf_token %}
+        <p class="delete" >delete</p>
+        <script>
+         $('.delete').click(function(e){
+                    var num = $(this).parent().attr("action")
+                    console.log("Hello")
+                    $.ajax({
+                      url: 'delete/' + num, /* Where should this go? */
+                      method: 'post', /* Which HTTP verb? */
+                      data: $(this).serialize(),
+                      success: function(serverResponse) { /* What code should we run when the server responds? */
+                        $('#placeholder3').html(serverResponse)
+                      }
+                    })
+                  });
+                  </script>
+    </form>
+        
+{% endfor %}
+
+        
